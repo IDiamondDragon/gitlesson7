@@ -92,17 +92,18 @@
             this.y = y;
         };
 
-        var Game = function(element)
+        var Game = function(canvas)
         {
-            var canvas = element[0];
-            var context = canvas.getContext('2d');
+            var innerCanvas = canvas[0];
+            var context = innerCanvas.getContext('2d');
             var snake = null;
             var food = null;
             var timer = null;
             var scale = 10;
+			var isEvenIteration = true;
 
-            var width = element.width();
-            var height = element.height();
+            var width = canvas.width();
+            var height = canvas.height();
 
             var maxX = (width - scale) / scale;
             var maxY = (height - scale) / scale;
@@ -159,7 +160,13 @@
             }
 
             function drawFood(food) {
-                drawCell(food.x, food.y, 'red', 'white');
+				
+				if (isEvenIteration)
+					drawCell(food.x, food.y, 'red', 'white');
+				  else
+					drawCell(food.x, food.y, 'pink', 'white');
+					
+				isEvenIteration = !isEvenIteration;
             }
 
             function drawCell(x, y, fill, stroke) {
